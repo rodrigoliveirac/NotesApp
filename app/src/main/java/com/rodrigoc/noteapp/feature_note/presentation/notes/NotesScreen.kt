@@ -1,4 +1,4 @@
-package com.rodrigoc.noteapp.feature_note.presentation.notes.components
+package com.rodrigoc.noteapp.feature_note.presentation.notes
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.clickable
@@ -16,8 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.rodrigoc.noteapp.feature_note.presentation.notes.NotesEvent
-import com.rodrigoc.noteapp.feature_note.presentation.notes.NotesViewModel
+import com.rodrigoc.noteapp.feature_note.presentation.notes.components.NoteItem
+import com.rodrigoc.noteapp.feature_note.presentation.notes.components.OrderSection
 import kotlinx.coroutines.launch
 
 @ExperimentalAnimationApi

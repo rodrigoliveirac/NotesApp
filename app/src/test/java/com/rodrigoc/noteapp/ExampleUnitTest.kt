@@ -1,4 +1,4 @@
-package com.honeybadger.noteapp
+package com.rodrigoc.noteapp
 
 import org.junit.Test
 

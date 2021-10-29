@@ -15,13 +15,13 @@ The NotesApp is useful to use in your daily routine in order to remind of some i
 	
 ## Technologies
 This Project is created with:
-* Room
-* Compose
-* Dagger - Hilt
-* Coroutines
-* Navigation
-* ViewModel
-* Material Design
+* *Room*
+* *Compose*
+* *Dagger - Hilt*
+* *Coroutines*
+* *Navigation*
+* *ViewModel*
+* *Material Design*
 
 ## Design Patterns
 * *Clean Architecture*

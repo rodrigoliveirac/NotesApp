@@ -24,5 +24,5 @@ This Project is created with:
 * Material Design
 
 ## Design Patterns
-* Clean Architecture
-* Model View ViewMode
+* *Clean Architecture*
+* *Model View ViewModel*

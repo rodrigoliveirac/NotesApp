@@ -41,7 +41,7 @@ fun NotesScreen(
                 },
                 backgroundColor = MaterialTheme.colors.primary
             ) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Add note")
+                Icon(imageVector = Icons.Default.Add, contentDescription = "AddFab")
             }
         },
         scaffoldState = scaffoldState

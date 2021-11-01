@@ -14,6 +14,7 @@ import com.rodrigoc.noteapp.ui.theme.NoteAppTheme
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -27,6 +28,7 @@ class NotesScreenTest {
 
     @get:Rule(order = 1)
     val composeRule = createAndroidComposeRule<MainActivity>()
+
 
     @ExperimentalAnimationApi
     @Before

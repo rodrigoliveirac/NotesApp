@@ -66,7 +66,8 @@ class NotesEndToEndTest {
                         val color = it.arguments?.getInt("noteColor") ?: -1
                         AddEditNoteScreen(
                             navController = navController,
-                            noteColor = color)
+                            noteColor = color
+                        )
                     }
                 }
             }
@@ -75,7 +76,7 @@ class NotesEndToEndTest {
 
     @Test
     fun saveNewNote_editAfterwards() {
-         // Click on FAB to get to add note screen
+        // Click on FAB to get to add note screen
         composeRule.onNodeWithContentDescription("AddFab").performClick()
 
         // Enter texts in title and content text fields
@@ -112,5 +113,45 @@ class NotesEndToEndTest {
         // Make sure the update was applied to the list
         composeRule.onNodeWithText("test-title2").assertIsDisplayed()
 
+    }
+
+    @Test
+    fun saveNewNotes_orderByTitleDescending() {
+        for (i in 1..3) {
+
+            // Click on FAB to get to add note screen
+            composeRule
+                .onNodeWithContentDescription("AddFab").performClick()
+
+            // Enter texts in title and content text fields
+            composeRule
+                .onNodeWithTag(TestTags.TITLE_TEXT_FIELD)
+                .performTextInput(i.toString())
+            composeRule
+                .onNodeWithTag(TestTags.CONTENT_TEXT_FIELD)
+                .performTextInput(i.toString())
+            // Save the new
+            composeRule.onNodeWithContentDescription("SaveFab").performClick()
+        }
+        composeRule.onNodeWithText("1").assertIsDisplayed()
+        composeRule.onNodeWithText("2").assertIsDisplayed()
+        composeRule.onNodeWithText("3").assertIsDisplayed()
+
+        composeRule
+            .onNodeWithContentDescription("Sort")
+            .performClick()
+        composeRule
+            .onNodeWithContentDescription("Title")
+            .performClick()
+        composeRule
+            .onNodeWithContentDescription("Descending")
+            .performClick()
+
+        composeRule.onAllNodesWithTag(TestTags.NOTE_ITEM)[0]
+            .assertTextContains("3")
+        composeRule.onAllNodesWithTag(TestTags.NOTE_ITEM)[1]
+            .assertTextContains("2")
+        composeRule.onAllNodesWithTag(TestTags.NOTE_ITEM)[2]
+            .assertTextContains("1")
     }
 }

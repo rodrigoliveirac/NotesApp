@@ -22,6 +22,8 @@ This Project is created with:
 * *Navigation*
 * *ViewModel*
 * *Material Design*
+* *Unit Tests*
+* *Instrumented Tests*
 
 ## Design Patterns
 * *Clean Architecture*

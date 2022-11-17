@@ -2,10 +2,14 @@ package com.rodrigoc.noteapp.di
 
 import android.app.Application
 import androidx.room.Room
+import com.rodrigoc.LogServiceImpl
+import com.rodrigoc.noteapp.LogService
 import com.rodrigoc.noteapp.feature_note.data.data_source.NoteDatabase
 import com.rodrigoc.noteapp.feature_note.data.repository.NoteRepositoryImpl
 import com.rodrigoc.noteapp.feature_note.domain.repository.NoteRepository
 import com.rodrigoc.noteapp.feature_note.domain.use_case.*
+import com.rodrigoc.noteapp.firebase.AccountService
+import com.rodrigoc.noteapp.firebase.AccountServiceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -42,4 +46,18 @@ object AppModule {
             getNote = GetNote(repository)
         )
     }
+
+    // Firebase features
+    @Provides
+    @Singleton
+    fun provideAccountService(accountServiceImpl: AccountServiceImpl): AccountService {
+        return accountServiceImpl
+    }
+
+    @Provides
+    @Singleton
+    fun provideLogService(logServiceImpl: LogServiceImpl): LogService {
+        return logServiceImpl
+    }
+
 }

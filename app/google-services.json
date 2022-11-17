@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "857608725779",
+    "project_id": "tomenota-8079b",
+    "storage_bucket": "tomenota-8079b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:857608725779:android:92fba63e4c573cd5aa26e6",
+        "android_client_info": {
+          "package_name": "com.rodrigoc.noteapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "857608725779-9187q65n7ajika8kaef5m9gq037tqlpb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rodrigoc.noteapp",
+            "certificate_hash": "74311470ebd92cdf3b75ffc412fe6cb2d2562061"
+          }
+        },
+        {
+          "client_id": "857608725779-9s06sm9sa50m45m27rvp9ta7qj49iqif.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1OEXEypPNlxM-ot2r3lmPSE4nU5TcRVg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "857608725779-9s06sm9sa50m45m27rvp9ta7qj49iqif.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

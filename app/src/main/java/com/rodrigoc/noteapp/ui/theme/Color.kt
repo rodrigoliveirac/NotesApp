@@ -2,8 +2,9 @@ package com.rodrigoc.noteapp.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val DarkGray = Color(0xFF202020)
-val LightBlue = Color(0xFFD7E8DE)
+val BrightOrange = Color(0xFFFF8A65)
+val MediumOrange = Color(0xFFFFA000)
+val DarkOrange = Color(0xFFF57C00)
 
 val RedOrange = Color(0xffffab91)
 val RedPink = Color(0xfff48fb1)

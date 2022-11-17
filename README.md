@@ -24,6 +24,7 @@ This Project is created with:
 * *Material Design*
 * *Unit Tests*
 * *Instrumented Tests*
+* *Firebase*
 
 ## Design Patterns
 * *Clean Architecture*

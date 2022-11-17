@@ -10,6 +10,8 @@ import com.rodrigoc.noteapp.feature_note.domain.repository.NoteRepository
 import com.rodrigoc.noteapp.feature_note.domain.use_case.*
 import com.rodrigoc.noteapp.firebase.AccountService
 import com.rodrigoc.noteapp.firebase.AccountServiceImpl
+import com.rodrigoc.noteapp.firebase.StorageService
+import com.rodrigoc.noteapp.firebase.StorageServiceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -58,6 +60,12 @@ object AppModule {
     @Singleton
     fun provideLogService(logServiceImpl: LogServiceImpl): LogService {
         return logServiceImpl
+    }
+
+    @Provides
+    @Singleton
+    fun provideStorageService(storageServiceImpl: StorageServiceImpl) : StorageService {
+            return storageServiceImpl
     }
 
 }

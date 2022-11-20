@@ -4,12 +4,19 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.perf.ktx.performance
+import com.rodrigoc.noteapp.LogService
+import com.rodrigoc.noteapp.NotesAppViewModel
+import com.rodrigoc.noteapp.core.ext.idFromParameter
 import com.rodrigoc.noteapp.feature_note.domain.model.InvalidNoteException
 import com.rodrigoc.noteapp.feature_note.domain.model.Note
 import com.rodrigoc.noteapp.feature_note.domain.use_case.NoteUseCases
+import com.rodrigoc.noteapp.firebase.AccountService
+import com.rodrigoc.noteapp.firebase.StorageService
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
@@ -17,9 +24,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddEditNoteViewModel @Inject constructor(
+    logService: LogService,
     private val noteUseCases: NoteUseCases,
-    savedStateHandle: SavedStateHandle
-) : ViewModel() {
+    savedStateHandle: SavedStateHandle,
+    private val storageService: StorageService,
+    private val accountService: AccountService
+) : NotesAppViewModel(logService) {
 
     private val _noteTitle = mutableStateOf(
         NoteTextFieldState(
@@ -42,6 +52,7 @@ class AddEditNoteViewModel @Inject constructor(
     val eventFlow = _eventFlow.asSharedFlow()
 
     private var currentNoteId: Int? = null
+    private var userId: String = ""
 
     init {
         savedStateHandle.get<Int>("noteId")?.let { noteId ->
@@ -49,6 +60,7 @@ class AddEditNoteViewModel @Inject constructor(
                 viewModelScope.launch {
                     noteUseCases.getNote(noteId)?.also { note ->
                         currentNoteId = note.id
+                        userId = note.userId
                         _noteTitle.value = noteTitle.value.copy(
                             text = note.title,
                             isHintVisible = false
@@ -58,6 +70,17 @@ class AddEditNoteViewModel @Inject constructor(
                             isHintVisible = false
                         )
                         _noteColor.value = note.color
+                    }
+
+                    storageService.getNote(noteId.toString().idFromParameter(), ::onError) {
+                        var note = Note(
+                            userId  = userId,
+                            id = currentNoteId,
+                            title = _noteTitle.value.text,
+                            content = _noteContent.value.text,
+                            color = _noteColor.value
+                        )
+                        note = it
                     }
                 }
             }
@@ -92,17 +115,19 @@ class AddEditNoteViewModel @Inject constructor(
             }
             is AddEditNoteEvent.SaveNote -> {
                 viewModelScope.launch {
+                    val note = Note(
+                        title = _noteTitle.value.text,
+                        content = _noteContent.value.text,
+                        timestamp = System.currentTimeMillis(),
+                        color = noteColor.value,
+                        id = currentNoteId,
+                        userId = userId,
+                    )
+                    val e = note.copy(userId = accountService.getUserId())
                     try {
                         noteUseCases.addNote(
-                            Note(
-                                title = _noteTitle.value.text,
-                                content = _noteContent.value.text,
-                                timestamp = System.currentTimeMillis(),
-                                color = noteColor.value,
-                                id = currentNoteId
-                            )
+                            note
                         )
-                        _eventFlow.emit(UiEvent.SaveNote)
                     } catch (e: InvalidNoteException) {
                         _eventFlow.emit(
                             UiEvent.ShowSnackBack(
@@ -110,7 +135,32 @@ class AddEditNoteViewModel @Inject constructor(
                             )
                         )
                     }
+                    if(e.id.toString().isBlank()) saveNote(note) else updateNote(note)
+                    _eventFlow.emit(UiEvent.SaveNote)
                 }
+            }
+        }
+    }
+
+    private fun updateNote(note: Note) {
+        val updateNoteTrace = Firebase.performance.newTrace("UPDATE_TASK_TRACE")
+        updateNoteTrace.start()
+
+        storageService.updateNote(note) { error ->
+            updateNoteTrace.stop()
+            viewModelScope.launch {
+                if (error == null) _eventFlow.emit(UiEvent.SaveNote) else onError(error)
+            }
+        }
+    }
+
+    private fun saveNote(note: Note) {
+        val saveNoteTrace = Firebase.performance.newTrace("save_note_trace")
+        saveNoteTrace.start()
+        storageService.saveNote(note) { error ->
+            saveNoteTrace.stop()
+            viewModelScope.launch {
+                if (error == null) _eventFlow.emit(UiEvent.SaveNote) else onError(error)
             }
         }
     }

@@ -7,6 +7,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.rodrigoc.noteapp.feature_note.domain.model.Note
+import com.rodrigoc.noteapp.feature_note.presentation.notes.NotesState
 import javax.inject.Inject
 
 class StorageServiceImpl @Inject constructor() : StorageService {

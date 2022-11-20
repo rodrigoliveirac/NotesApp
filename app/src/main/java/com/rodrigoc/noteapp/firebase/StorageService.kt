@@ -1,6 +1,5 @@
 package com.rodrigoc.noteapp.firebase
 
-import com.google.android.gms.tasks.Task
 import com.rodrigoc.noteapp.feature_note.domain.model.Note
 
 interface StorageService {

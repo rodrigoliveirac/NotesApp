@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Sort
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,6 +18,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.rodrigoc.noteapp.core.snackbar.SnackbarManager
 import com.rodrigoc.noteapp.core.util.TestTags
 import com.rodrigoc.noteapp.feature_note.presentation.notes.components.NoteItem
 import com.rodrigoc.noteapp.feature_note.presentation.notes.components.OrderSection
@@ -49,7 +51,7 @@ fun NotesScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
+                .padding(it.calculateBottomPadding() + 16.dp)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -95,9 +97,10 @@ fun NotesScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
-                               navController.navigate(Screen.AddEditNoteScreen.route +
-                                       "?noteId=${note.id}&noteColor=${note.color}"
-                               )
+                                navController.navigate(
+                                    Screen.AddEditNoteScreen.route +
+                                            "?noteId=${note.id}&noteColor=${note.color}"
+                                )
                             },
                         onDeleteClick = {
                             viewModel.onEvent(NotesEvent.DeleteNote(note))
@@ -106,7 +109,7 @@ fun NotesScreen(
                                     message = "Note deleted",
                                     actionLabel = "Undo"
                                 )
-                                if(result == SnackbarResult.ActionPerformed) {
+                                if (result == SnackbarResult.ActionPerformed) {
                                     viewModel.onEvent(NotesEvent.RestoreNote)
                                 }
                             }
@@ -115,6 +118,10 @@ fun NotesScreen(
                     Spacer(modifier = Modifier.height(16.dp))
                 }
             }
+        }
+        DisposableEffect(viewModel) {
+            viewModel.addListener()
+            onDispose { viewModel.removeListener() }
         }
     }
 }

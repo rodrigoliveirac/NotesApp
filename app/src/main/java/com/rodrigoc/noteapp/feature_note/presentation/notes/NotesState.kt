@@ -5,7 +5,7 @@ import com.rodrigoc.noteapp.feature_note.domain.util.NoteOrder
 import com.rodrigoc.noteapp.feature_note.domain.util.OrderType
 
 data class NotesState(
-    val notes: List<Note> = emptyList(),
-    val noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending),
-    val isOrderSectionVisible: Boolean = false
+    var notes: List<Note> = emptyList(),
+    var noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending),
+    var isOrderSectionVisible: Boolean = false
 )

@@ -1,5 +1,7 @@
 package com.rodrigoc.noteapp.firebase.ui.login
 
+import android.content.res.Resources
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
@@ -11,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
@@ -23,7 +26,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.rodrigoc.noteapp.R
+import com.rodrigoc.noteapp.core.ext.fieldModifier
 import com.rodrigoc.noteapp.feature_note.presentation.util.Screen
+import com.rodrigoc.noteapp.ui.theme.BrightOrange
 
 
 @Composable
@@ -46,7 +51,7 @@ fun LoginScreen(
                 fontSize = 14.sp,
                 fontFamily = androidx.compose.ui.text.font.FontFamily.Default,
                 textDecoration = TextDecoration.Underline,
-                color = colorResource(id = R.color.design_default_color_primary)
+                color = BrightOrange
             )
         )
     }
@@ -55,7 +60,7 @@ fun LoginScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
+        Spacer(modifier = Modifier.height(120.dp))
         Text(
             text = "Login",
             style = TextStyle(
@@ -97,7 +102,8 @@ fun LoginScreen(
             onClick = { viewModel.onForgotPasswordClick() },
             style = TextStyle(
                 fontSize = 14.sp,
-                fontFamily = androidx.compose.ui.text.font.FontFamily.Default
+                fontFamily = androidx.compose.ui.text.font.FontFamily.Default,
+                color = BrightOrange
             )
         )
     }

@@ -6,11 +6,12 @@ import com.rodrigoc.noteapp.ui.theme.*
 
 @Entity
 data class Note(
+    val userId: String = "",
     val title: String = "",
     val content: String = "",
     val timestamp: Long = "".toLong(),
     val color: Int = "".toInt(),
-    @PrimaryKey val id: Int? = null
+    @PrimaryKey val id: Int? = null,
 ) {
     companion object {
         val noteColors = listOf(RedOrange, LightGreen, Violet, BabyBlue, RedPink)
